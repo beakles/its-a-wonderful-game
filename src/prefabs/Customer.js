@@ -4,6 +4,7 @@ class Customer extends Phaser.GameObjects.Sprite {
 
     scene.add.existing(this);
 
+    this.status = "waiting";
     this.favoriteIngredients = [];
     this.withdrawAmount = 0;
   }
@@ -11,8 +12,12 @@ class Customer extends Phaser.GameObjects.Sprite {
   selectFavoriteIngredients(ingredientsArray) {
     let randomIngredientAmount = Phaser.Math.Between(1, 3);
     for (let ingredientSelectionCount = 0; ingredientSelectionCount < randomIngredientAmount; ingredientSelectionCount += 1) {
-      let randomIngredient = ingredientsArray[Phaser.Math.Between(0, ingredientsArray.length)];
+      let randomIngredient = ingredientsArray[Phaser.Math.Between(0, ingredientsArray.length - 1)];
       this.favoriteIngredients.push(randomIngredient);
     }
+  }
+
+  update() {
+    
   }
 }

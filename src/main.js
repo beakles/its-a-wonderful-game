@@ -7,8 +7,8 @@ let gameConfiguration = {
     sceneSettings: {
         iceCreamScene: {
             playerInventoryCap: 3,      // maximum amount of ingredients the player can "hold" at any given time
-            customersCap: 10,           // maximum amount of customers that can be present on the screen at any given time
-            customerSpawnTime: 60,      // time (in seconds) to wait before spawning a new customer
+            customersCap: 3,           // maximum amount of customers that can be present on the screen at any given time
+            customerSpawnTime: 2,      // time (in seconds) to wait before spawning a new customer
             customerOrderComplexity: [  // the range of the number of ingredients a customer's order can contain
                 1,
                 3
@@ -33,7 +33,10 @@ let globalVariables = {
         iceCream: false,
         bankRush: false
     },
-    gameDelta: 0
+    gameDelta: 0,
+    ingredientSelected: false,
+    ingredientSelectedDebounce: false,
+    lastIngredientSelected: "null"
 }
 
 let game = new Phaser.Game(gameConfiguration);
