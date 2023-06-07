@@ -30,6 +30,20 @@ class iceCreamScene extends Phaser.Scene {
     this.orderBackground = this.add.rectangle(415, 290, 170, 60, 0x808080).setOrigin(0, 0);
     this.orderBackground.alpha = 0;
 
+    let tutorialTextConfig = {
+      fontFamily: 'Courier',
+      fontSize: '18px',
+      backgroundColor: '#808080FF',
+      color: '#FFFFFFFF',
+      align: 'center',
+      padding: {
+        top: 5,
+        bottom: 5,
+        left: 5,
+        right: 5
+      }
+    }
+
     let scoreTextConfig = {
       fontFamily: 'Courier',
       fontSize: '40px',
@@ -43,6 +57,7 @@ class iceCreamScene extends Phaser.Scene {
         right: 5
       }
     }
+    this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients\nClick the ingredients at the top right to select them", tutorialTextConfig).setOrigin(0.5, 0.5);
     this.scoreText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5, "SCORE: 0", scoreTextConfig).setOrigin(0.5, 0.5);
 
     this.characterPlayer = new Player(this, gameConfiguration.width / 2 - 500, gameConfiguration.height, 'characterPlayer').setOrigin(0.5, 0.5);
