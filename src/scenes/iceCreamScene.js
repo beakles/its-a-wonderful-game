@@ -24,10 +24,10 @@ class iceCreamScene extends Phaser.Scene {
 
     this.ingredientIconsBackground = this.add.rectangle(gameConfiguration.width / 2 + 270, 20, 170, 60, 0x808080).setOrigin(0, 0);
 
-    this.playerInputBackground = this.add.rectangle(gameConfiguration.width / 2 - 585, 290, 170, 60, 0x808080).setOrigin(0, 0);
+    this.playerInputBackground = this.add.rectangle(gameConfiguration.width / 2 - 585, 290 - 70, 55 * gameConfiguration.sceneSettings.iceCreamScene.playerInventoryCap, 60, 0x808080).setOrigin(0, 0);
     this.playerInputBackground.alpha = 1;
 
-    this.orderBackground = this.add.rectangle(415, 290, 170, 60, 0x808080).setOrigin(0, 0);
+    this.orderBackground = this.add.rectangle(415, 290, 55 * gameConfiguration.sceneSettings.iceCreamScene.customerOrderComplexity[1], 60, 0x808080).setOrigin(0, 0);
     this.orderBackground.alpha = 0;
 
     let tutorialTextConfig = {
@@ -130,7 +130,7 @@ class iceCreamScene extends Phaser.Scene {
         }
       }
 
-      let newIngredient = new Ingredient(this, gameConfiguration.width / 2 - 555 + 50 * this.characterPlayer.ingredientsInventory.length, 320, globalVariables.lastIngredientSelected, 0, globalVariables.lastIngredientSelected, false).setOrigin(0.5, 0.5);
+      let newIngredient = new Ingredient(this, gameConfiguration.width / 2 - 555 + 50 * this.characterPlayer.ingredientsInventory.length, 320 - 70, globalVariables.lastIngredientSelected, 0, globalVariables.lastIngredientSelected, false).setOrigin(0.5, 0.5);
       this.characterPlayer.ingredientsInventory.push(newIngredient);
     }
 
