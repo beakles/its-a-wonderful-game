@@ -3,7 +3,7 @@ let gameConfiguration = {
     gameSpeed: 1,
     width: 1280,
     height: 720,
-    scene: [iceCreamScene, bankRushScene],
+    scene: [titleScreen, iceCreamScene, bankRushScene],
     sceneSettings: {
         iceCreamScene: {
             playerInventoryCap: 3,      // maximum amount of ingredients the player can "hold" at any given time

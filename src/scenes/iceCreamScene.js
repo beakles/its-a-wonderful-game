@@ -58,7 +58,7 @@ class iceCreamScene extends Phaser.Scene {
       }
     }
     this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients\nClick the ingredients at the top right to select them", tutorialTextConfig).setOrigin(0.5, 0.5);
-    this.scoreText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5, "SCORE: 0", scoreTextConfig).setOrigin(0.5, 0.5);
+    this.scoreText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5, "CENTS: 0", scoreTextConfig).setOrigin(0.5, 0.5);
 
     this.characterPlayer = new Player(this, gameConfiguration.width / 2 - 500, gameConfiguration.height, 'characterPlayer').setOrigin(0.5, 0.5);
     this.characterPlayer.y -= this.characterPlayer.height / 2;
@@ -134,7 +134,7 @@ class iceCreamScene extends Phaser.Scene {
       this.characterPlayer.ingredientsInventory.push(newIngredient);
     }
 
-    this.scoreText.text = "SCORE: " + this.currentScore;
+    this.scoreText.text = "CENTS: " + this.currentScore;
 
     if (this.currentCustomersArray.length < gameConfiguration.sceneSettings.iceCreamScene.customersCap) {
       this.customerSpawnTimer += 1 * gameConfiguration.gameSpeed / globalVariables.gameDelta;
@@ -164,7 +164,7 @@ class iceCreamScene extends Phaser.Scene {
         poppedCustomer.destroy();
         customersArrayItem -= 1;
         this.clearOrder();
-        this.currentScore += 10;
+        this.currentScore += 5;
         this.sound.play('orderCorrect');
         while (this.characterPlayer.ingredientsInventory.length > 0) {
           let inventoryIngredient = this.characterPlayer.ingredientsInventory.pop();
