@@ -6,7 +6,15 @@ class Customer extends Phaser.GameObjects.Sprite {
 
     this.status = "waiting";
     this.favoriteIngredients = [];
-    this.withdrawAmount = 0;
+
+    let customerWithdrawTolerance = Phaser.Math.Between(gameConfiguration.sceneSettings.bankRushScene.customerNegotiationTolerance[0], gameConfiguration.sceneSettings.bankRushScene.customerNegotiationTolerance[1]);
+
+    this.preferredWithdrawAmount = [
+      gameConfiguration.sceneSettings.bankRushScene.customerWithdrawRange[0] * customerWithdrawTolerance,
+      gameConfiguration.sceneSettings.bankRushScene.customerWithdrawRange[1] / customerWithdrawTolerance,
+    ];
+
+    this.withdrawMood = "happy";
   }
 
   selectFavoriteIngredients(ingredientsArray) {
