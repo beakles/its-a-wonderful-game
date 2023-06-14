@@ -10,8 +10,8 @@ let gameConfiguration = {
             customersCap: 3,                    // maximum amount of customers that can be present on the screen at any given time
             customerSpawnTime: 2,               // time (in seconds) to wait before spawning a new customer
             customerOrderComplexity: [          // the range of the number of ingredients a customer's order can contain
-                1,
-                3
+                0,
+                2
             ],
             sceneTimeLimit: 120                 // time (in seconds) until the minigame ends and the player moves on to the next scene
         },

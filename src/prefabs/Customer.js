@@ -17,8 +17,10 @@ class Customer extends Phaser.GameObjects.Sprite {
     this.withdrawMood = "happy";
   }
 
-  selectFavoriteIngredients(ingredientsArray) {
+  selectFavoriteIngredients(ingredientsArray, flavorArray) {
     let randomIngredientAmount = Phaser.Math.Between(gameConfiguration.sceneSettings.iceCreamScene.customerOrderComplexity[0], gameConfiguration.sceneSettings.iceCreamScene.customerOrderComplexity[1]);
+    let selectedFlavor = flavorArray[Phaser.Math.Between(0, ingredientsArray.length - 1)];
+    this.favoriteIngredients.push(selectedFlavor);
     for (let ingredientSelectionCount = 0; ingredientSelectionCount < randomIngredientAmount; ingredientSelectionCount += 1) {
       let randomIngredient = ingredientsArray[Phaser.Math.Between(0, ingredientsArray.length - 1)];
       this.favoriteIngredients.push(randomIngredient);

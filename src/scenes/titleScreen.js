@@ -18,7 +18,7 @@ class titleScreen extends Phaser.Scene {
         });
 
         this.creditsButton = this.add.rectangle(870, 500, 400, 175, 0x808080).setOrigin(0, 0);
-        this.creditsButton.alpha = 0.5;
+        this.creditsButton.alpha = 0.01;
         this.creditsButton.setInteractive();
         this.creditsButton.on('pointerdown', function(pointer) {
             self.scene.start('creditsScene');

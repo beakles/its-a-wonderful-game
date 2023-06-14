@@ -4,17 +4,16 @@ class creditsScene extends Phaser.Scene {
   }
 
   preload() {
-      // this.load.image('title', './assets/title.png');
+      this.load.image('credits', './assets/credits.png');
   }
 
   create() {
       const self = this;
-
+      this.bg = this.add.tileSprite(0, 0, gameConfiguration.width, gameConfiguration.height, 'credits').setOrigin(0, 0);
       let creditsTextConfig = {
-        fontFamily: 'CourierBold',
+        fontFamily: 'Courier',
         fontSize: '32px',
-        backgroundColor: '#202020FF',
-        color: '#FFFFFF',
+        color: '#000000',
         align: 'left',
         padding: {
             top: 5,
@@ -29,10 +28,10 @@ class creditsScene extends Phaser.Scene {
 
       this.creditsText = this.add.text(gameConfiguration.width / 2, gameConfiguration.height / 2, "", creditsTextConfig).setOrigin(0.5, 0.5);
 
-      this.creditsText.text = "Samuel Hadus:\n-Art\n-Design\n-Programming\n\nBrannon Eakles:\n-Design\n-Programming"
+      this.creditsText.text = "Samuel Maturo:\n-Art\n-Design\n-Some Programming\n\nBrannon Eakles:\n-Design\n-Programming"
 
-      this.backButton = this.add.rectangle(20, 500, 400, 175, 0x808080).setOrigin(0, 0);
-      this.backButton.alpha = 0.5;
+      this.backButton = this.add.rectangle(80, 500, 400, 175, 0x808080).setOrigin(0, 0);
+      this.backButton.alpha = 0.01;
       this.backButton.setInteractive();
       this.backButton.on('pointerdown', function(pointer) {
           self.scene.start('titleScreen');
