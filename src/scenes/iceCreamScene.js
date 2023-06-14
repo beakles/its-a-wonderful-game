@@ -4,6 +4,8 @@ class iceCreamScene extends Phaser.Scene {
   }
 
   preload() {
+
+    // Load assets needed for the scene
     this.load.image('iceCreamShop', './assets/ice_cream_shop.png');
 
     this.load.image('characterPlayer', './assets/george.png');
@@ -20,20 +22,22 @@ class iceCreamScene extends Phaser.Scene {
   }
 
   create() {
+
+    // Background for the scene (the ice cream shop)
     this.iceCreamSceneBackdrop = this.add.tileSprite(0, 0, gameConfiguration.width, gameConfiguration.height, 'iceCreamShop').setOrigin(0, 0);
 
-    this.ingredientIconsBackground = this.add.rectangle(gameConfiguration.width / 2 + 270, 20, 170, 60, 0x808080).setOrigin(0, 0);
+    this.ingredientIconsBackground = this.add.rectangle(gameConfiguration.width / 2 + 270, 20, 170, 60, 0x404040).setOrigin(0, 0);
 
-    this.playerInputBackground = this.add.rectangle(gameConfiguration.width / 2 - 585, 290 - 70, 55 * gameConfiguration.sceneSettings.iceCreamScene.playerInventoryCap, 60, 0x808080).setOrigin(0, 0);
+    this.playerInputBackground = this.add.rectangle(gameConfiguration.width / 2 - 585, 290 - 70, 55 * gameConfiguration.sceneSettings.iceCreamScene.playerInventoryCap, 60, 0x404040).setOrigin(0, 0);
     this.playerInputBackground.alpha = 1;
 
-    this.orderBackground = this.add.rectangle(415, 290, 55 * gameConfiguration.sceneSettings.iceCreamScene.customerOrderComplexity[1], 60, 0x808080).setOrigin(0, 0);
+    this.orderBackground = this.add.rectangle(415, 290, 55 * gameConfiguration.sceneSettings.iceCreamScene.customerOrderComplexity[1], 60, 0x404040).setOrigin(0, 0);
     this.orderBackground.alpha = 0;
 
     let tutorialTextConfig = {
-      fontFamily: 'Courier',
-      fontSize: '18px',
-      backgroundColor: '#808080FF',
+      fontFamily: 'CourierBold',
+      fontSize: '24px',
+      backgroundColor: '#404040FF',
       color: '#FFFFFFFF',
       align: 'center',
       padding: {
@@ -47,7 +51,7 @@ class iceCreamScene extends Phaser.Scene {
     let scoreTextConfig = {
       fontFamily: 'Courier',
       fontSize: '40px',
-      backgroundColor: '#808080FF',
+      backgroundColor: '#404040FF',
       color: '#FFFFFFFF',
       align: 'left',
       padding: {
@@ -57,9 +61,11 @@ class iceCreamScene extends Phaser.Scene {
         right: 5
       }
     }
-    
-    this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients\nClick the ingredients at the top right to select them", tutorialTextConfig).setOrigin(0.5, 0.5);
+
+    this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients (order matters)\nClick the ingredients at the top right to select them", tutorialTextConfig).setOrigin(0.5, 0.5);
     this.scoreText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5, "CENTS: 0", scoreTextConfig).setOrigin(0.5, 0.5);
+
+    this.sceneTimeText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5 + 75, "TIME: 0", scoreTextConfig).setOrigin(0.5, 0.5);
 
     this.characterPlayer = new Player(this, gameConfiguration.width / 2 - 500, gameConfiguration.height, 'characterPlayer').setOrigin(0.5, 0.5);
     this.characterPlayer.y -= this.characterPlayer.height / 2;
@@ -82,6 +88,8 @@ class iceCreamScene extends Phaser.Scene {
     this.currentOrder = [];
 
     this.currentScore = 0;
+
+    this.sceneTime = gameConfiguration.sceneSettings.iceCreamScene.sceneTimeLimit;
   }
 
   getOrder(customer) {
@@ -120,6 +128,18 @@ class iceCreamScene extends Phaser.Scene {
 
   update(time, delta) {
     globalVariables.gameDelta = 1000 / delta;
+
+    this.sceneTime -= 1 * gameConfiguration.gameSpeed / globalVariables.gameDelta;
+
+    if (this.sceneTime <= 0) {
+      this.scene.start('transitionScene');
+    }
+
+    if (Math.floor(this.sceneTime % 60) < 10) {
+      this.sceneTimeText.text = `TIME: ${Math.floor(this.sceneTime / 60)}:0${Math.floor(this.sceneTime % 60)}`;
+    } else {
+      this.sceneTimeText.text = `TIME: ${Math.floor(this.sceneTime / 60)}:${Math.floor(this.sceneTime % 60)}`;
+    }
 
     if (globalVariables.ingredientSelected) {
       globalVariables.ingredientSelected = false;

@@ -3,7 +3,7 @@ let gameConfiguration = {
     gameSpeed: 1,
     width: 1280,
     height: 720,
-    scene: [titleScreen, iceCreamScene, bankRushScene, creditsScene],
+    scene: [titleScreen, iceCreamScene, bankRushScene, creditsScene, transitionScene],
     sceneSettings: {
         iceCreamScene: {
             playerInventoryCap: 3,              // maximum amount of ingredients the player can "hold" at any given time
@@ -12,7 +12,8 @@ let gameConfiguration = {
             customerOrderComplexity: [          // the range of the number of ingredients a customer's order can contain
                 1,
                 3
-            ]
+            ],
+            sceneTimeLimit: 120                 // time (in seconds) until the minigame ends and the player moves on to the next scene
         },
         bankRushScene: {
             playerStartingMoney: 500,           // starting amount of money that the player can loan out to customers
@@ -25,8 +26,9 @@ let gameConfiguration = {
                 2
             ],
             maxSceneCustomers: 20,              // total number of customers that need to be satisfied to complete the scene
-            customersCap: 3,                     // maximum number of customers that can be present on the screen at any given time
-            customerSpawnTime: 3                // time (in seconds) to wait before spawning a new customer
+            customersCap: 3,                    // maximum number of customers that can be present on the screen at any given time
+            customerSpawnTime: 3,               // time (in seconds) to wait before spawning a new customer
+            sceneTimeLimit: 300                 // time (in seconds) until the minigame ends and the player moves on to the next scene
         }
     }
 }
