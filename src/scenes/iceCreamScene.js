@@ -71,9 +71,8 @@ class iceCreamScene extends Phaser.Scene {
     // tutorial, score and timer
     this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients (order matters)\nClick the ingredients at the top right to select them", tutorialTextConfig).setOrigin(0.5, 0.5);
     this.scoreText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5, "CENTS: 0/100", scoreTextConfig).setOrigin(0.5, 0.5);
-
     this.sceneTimeText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5 + 75, "TIME: 0", scoreTextConfig).setOrigin(0.5, 0.5);
-
+    // player and position
     this.characterPlayer = new Player(this, gameConfiguration.width / 2 - 500, gameConfiguration.height, 'characterPlayer').setOrigin(0.5, 0.5);
     this.characterPlayer.y -= this.characterPlayer.height / 2;
 
@@ -110,16 +109,17 @@ class iceCreamScene extends Phaser.Scene {
       this.flavorStrawberry
     ];
     this.currentIngredientsArray = []; // ingredients the player currently has in their inventory
-    this.currentOrder = [];
+    this.currentOrder = []; // the customer's current order
+    // reset button
     this.resetButton = this.add.rectangle(gameConfiguration.width / 2 + 300, 130, 100, 50, 0x404040).setOrigin(0, 0);
     this.resetButton.setInteractive();
     this.resetButton.on('pointerdown', function() {
       self.clearInventory();
     })
     this.resetText = this.add.text(gameConfiguration.width / 2 + 300, 130, "RESET", scoreTextConfig).setOrigin(0, 0);
-
+    // what it's all about
     this.currentScore = 0;
-
+    // set timer based on game configuration
     this.sceneTime = gameConfiguration.sceneSettings.iceCreamScene.sceneTimeLimit;
   }
 
@@ -176,7 +176,7 @@ class iceCreamScene extends Phaser.Scene {
 
   update(time, delta) {
     globalVariables.gameDelta = 1000 / delta;
-
+    // timer in seconds
     this.sceneTime -= 1 * gameConfiguration.gameSpeed / globalVariables.gameDelta;
 
     // check if player has completed the win requirement
@@ -208,6 +208,7 @@ class iceCreamScene extends Phaser.Scene {
       // add clicked ingredient to order
       let newIngredient = new Ingredient(this, gameConfiguration.width / 2 - 555 + 50 * this.characterPlayer.ingredientsInventory.length, 320 - 70, globalVariables.lastIngredientSelected, 0, globalVariables.lastIngredientSelected, false).setOrigin(0.5, 0.5);
       this.characterPlayer.ingredientsInventory.push(newIngredient);
+      // add correct ice cream bowl to scene when clicked
       if (newIngredient.name == 'vanilla'){
         this.vanillaBowl.visible = true;
         this.chocolateBowl.visible = false;

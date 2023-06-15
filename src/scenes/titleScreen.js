@@ -8,6 +8,7 @@ class titleScreen extends Phaser.Scene {
     }
   
     create() {
+        // clickable buttons for start and credits
         const self = this;
         this.titleScreen = this.add.tileSprite(0, 0, gameConfiguration.width, gameConfiguration.height, 'title').setOrigin(0, 0);
         this.playButton = this.add.rectangle(330, 450, 475, 250, 0x808080).setOrigin(0, 0);
@@ -26,6 +27,7 @@ class titleScreen extends Phaser.Scene {
     }
 
     update(time, delta) {
+        // nothing to update
         globalVariables.gameDelta = 1000 / delta;
     }
   }

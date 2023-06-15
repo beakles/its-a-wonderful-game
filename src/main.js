@@ -1,9 +1,15 @@
+/*
+Collaboration between Samuel Maturo and Brannon Eakles
+Phaser components used: Text objects, prefabs, timers, sound manager, tilemaps for backgrounds, global variables, and clickable buttons and objects using setInteracive()
+The crayon drawing art style as if a kid was playing this game with physical papers overlapping on each other is a unique representation of this film.
+*/
+
 let gameConfiguration = {
     type: Phaser.AUTO,
     gameSpeed: 1,
     width: 1280,
     height: 720,
-    scene: [titleScreen, iceCreamScene, bankRushScene, creditsScene, transitionScene],
+    scene: [titleScreen, iceCreamScene, bankRushScene, creditsScene, transitionScene, endingScene],
     sceneSettings: {
         iceCreamScene: {
             playerInventoryCap: 3,              // maximum amount of ingredients the player can "hold" at any given time
