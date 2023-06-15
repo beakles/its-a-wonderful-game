@@ -41,7 +41,8 @@ let globalVariables = {
     gameDelta: 0,
     ingredientSelected: false,
     ingredientSelectedDebounce: false,
-    lastIngredientSelected: "null"
+    lastIngredientSelected: "null",
+    sceneEnded: "null"
 }
 
 let game = new Phaser.Game(gameConfiguration);

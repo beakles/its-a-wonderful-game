@@ -4,7 +4,6 @@ class iceCreamScene extends Phaser.Scene {
   }
 
   preload() {
-
     // Load assets needed for the scene
     this.load.image('iceCreamShop', './assets/ice_cream_shop.png');
 
@@ -20,6 +19,9 @@ class iceCreamScene extends Phaser.Scene {
     this.load.image('vanilla', './assets/vanillaSelect.png');
     this.load.image('chocolate', './assets/chocolateSelect.png');
     this.load.image('strawberry', './assets/strawberrySelect.png');
+    this.load.image('vanillaBowl', './assets/vanilla.png');
+    this.load.image('chocolateBowl', './assets/chocolate.png');
+    this.load.image('strawberryBowl', './assets/strawberry.png');
 
     this.load.audio('buttonClick', './assets/buttonClick.wav');
     this.load.audio('orderPresent', './assets/orderPresent.wav');
@@ -38,7 +40,7 @@ class iceCreamScene extends Phaser.Scene {
 
     this.orderBackground = this.add.rectangle(415, 290, 55 * gameConfiguration.sceneSettings.iceCreamScene.customerOrderComplexity[1] + 55, 60, 0x404040).setOrigin(0, 0);
     this.orderBackground.alpha = 0;
-
+    // text formatting
     let tutorialTextConfig = {
       fontFamily: 'CourierBold',
       fontSize: '24px',
@@ -66,7 +68,7 @@ class iceCreamScene extends Phaser.Scene {
         right: 5
       }
     }
-
+    // tutorial, score and timer
     this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients (order matters)\nClick the ingredients at the top right to select them", tutorialTextConfig).setOrigin(0.5, 0.5);
     this.scoreText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5, "CENTS: 0/100", scoreTextConfig).setOrigin(0.5, 0.5);
 
@@ -87,6 +89,14 @@ class iceCreamScene extends Phaser.Scene {
     this.flavorVanilla = new Ingredient(this, gameConfiguration.width / 2 + 300, 100, 'vanilla', 0, 'vanilla', true).setOrigin(0.5, 0.5);
     this.flavorChocolate = new Ingredient(this, gameConfiguration.width / 2 + 350, 100, 'chocolate', 0, 'chocolate', true).setOrigin(0.5, 0.5);
     this.flavorStrawberry = new Ingredient(this, gameConfiguration.width / 2 + 400, 100, 'strawberry', 0, 'strawberry', true).setOrigin(0.5, 0.5);
+
+    // ice cream bowls that can appear
+    this.vanillaBowl = this.add.image(300, 500, 'vanillaBowl').setOrigin(0.5, 0.5);
+    this.vanillaBowl.visible = false;
+    this.chocolateBowl = this.add.image(300, 500, 'chocolateBowl').setOrigin(0.5, 0.5);
+    this.chocolateBowl.visible = false;
+    this.strawberryBowl = this.add.image(300, 500, 'strawberryBowl').setOrigin(0.5, 0.5);
+    this.strawberryBowl.visible = false;
 
     // pools of ingredients that the player and customers have access to
     this.ingredientsArray = [
@@ -130,6 +140,9 @@ class iceCreamScene extends Phaser.Scene {
       let currentOrderIngredient = this.currentOrder.pop();
       currentOrderIngredient.destroy();
     }
+    this.vanillaBowl.visible = false;
+    this.chocolateBowl.visible = false;
+    this.strawberryBowl.visible = false;
   }
 
   // clear all ingredients the player has clicked
@@ -138,6 +151,9 @@ class iceCreamScene extends Phaser.Scene {
       let inventoryIngredient = this.characterPlayer.ingredientsInventory.pop();
       inventoryIngredient.destroy();
     }
+    this.vanillaBowl.visible = false;
+    this.chocolateBowl.visible = false;
+    this.strawberryBowl.visible = false;
   }
 
   // check if order is complete
@@ -163,14 +179,14 @@ class iceCreamScene extends Phaser.Scene {
 
     this.sceneTime -= 1 * gameConfiguration.gameSpeed / globalVariables.gameDelta;
 
-    // check if player has passed
+    // check if player has completed the win requirement
     if (this.currentScore >= 100) {
       globalVariables.endingCriteria.iceCream = true;
-      console.log(globalVariables.endingCriteria.iceCream);
     }
 
     // send player to transition scene when time ends
     if (this.sceneTime <= 0) {
+      globalVariables.sceneEnded = "iceCream";
       this.scene.start('transitionScene');
       console.log(globalVariables.endingCriteria.iceCream + " end");
     }
@@ -192,6 +208,19 @@ class iceCreamScene extends Phaser.Scene {
       // add clicked ingredient to order
       let newIngredient = new Ingredient(this, gameConfiguration.width / 2 - 555 + 50 * this.characterPlayer.ingredientsInventory.length, 320 - 70, globalVariables.lastIngredientSelected, 0, globalVariables.lastIngredientSelected, false).setOrigin(0.5, 0.5);
       this.characterPlayer.ingredientsInventory.push(newIngredient);
+      if (newIngredient.name == 'vanilla'){
+        this.vanillaBowl.visible = true;
+        this.chocolateBowl.visible = false;
+        this.strawberryBowl.visible = false;
+      } else if (newIngredient.name == 'chocolate'){
+        this.vanillaBowl.visible = false;
+        this.chocolateBowl.visible = true;
+        this.strawberryBowl.visible = false;
+      } else if (newIngredient.name == 'strawberry'){
+        this.vanillaBowl.visible = false;
+        this.chocolateBowl.visible = false;
+        this.strawberryBowl.visible = true;
+      }
     }
 
     this.scoreText.text = "CENTS: " + this.currentScore + "/100"; // update score
@@ -235,10 +264,7 @@ class iceCreamScene extends Phaser.Scene {
         this.clearOrder();
         this.currentScore += 5;
         this.sound.play('orderCorrect');
-        while (this.characterPlayer.ingredientsInventory.length > 0) {
-          let inventoryIngredient = this.characterPlayer.ingredientsInventory.pop();
-          inventoryIngredient.destroy();
-        }
+        this.clearInventory();
         continue;
       } else if (currentCustomer.status == "waiting") { // if current customer is not at the front move them forward
         let currentCustomerTargetPosition = 500 + (currentCustomer.width * 1.5 * customersArrayItem);

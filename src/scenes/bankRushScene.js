@@ -138,16 +138,46 @@ class bankRushScene extends Phaser.Scene {
     this.declineBargainText.alpha = 0;
   }
 
+  checkEnding() {
+    if (this.customersArray.length <= 0 && this.bankMorale >= 50 && this.currentMoney >= 0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   update(time, delta) {
     globalVariables.gameDelta = 1000 / delta;
 
     this.sceneTime -= 1 * gameConfiguration.gameSpeed / globalVariables.gameDelta;
 
     if (this.sceneTime <= 0) {
+      globalVariables.sceneEnded = 'bankRush';
+      if (this.checkEnding()) {
+        globalVariables.endingCriteria.bankRush = true;
+      } else {
+        globalVariables.endingCriteria.bankRush = false;
+      }
+      this.scene.start('transitionScene');
+    }
+
+    if (this.currentMoney < 0) {
+      globalVariables.sceneEnded = 'bankRush';
+      if (this.checkEnding()) {
+        globalVariables.endingCriteria.bankRush = true;
+      } else {
+        globalVariables.endingCriteria.bankRush = false;
+      }
       this.scene.start('transitionScene');
     }
 
     if (this.customersArray.length <= 0 && this.customersSpawned >= gameConfiguration.sceneSettings.bankRushScene.maxSceneCustomers) {
+      globalVariables.sceneEnded = 'bankRush';
+      if (this.checkEnding()) {
+        globalVariables.endingCriteria.bankRush = true;
+      } else {
+        globalVariables.endingCriteria.bankRush = false;
+      }
       this.scene.start('transitionScene');
     }
 
