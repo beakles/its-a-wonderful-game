@@ -77,7 +77,7 @@ class iceCreamScene extends Phaser.Scene {
     }
 
     // tutorial, score and timer
-    this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients (order matters)\nClick the ingredients at the top right to select them", tutorialTextConfig).setOrigin(0.5, 0.5);
+    this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients (order matters).\nClick the ingredients at the top right to select them.", tutorialTextConfig).setOrigin(0.5, 0.5);
     this.scoreText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5, "CENTS: 0/100", scoreTextConfig).setOrigin(0.5, 0.5);
     this.sceneTimeText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5 + 75, "TIME: 0", scoreTextConfig).setOrigin(0.5, 0.5);
     // player and position
@@ -198,7 +198,7 @@ class iceCreamScene extends Phaser.Scene {
     if (this.sceneTime <= 0) {
       globalVariables.sceneEnded = "iceCream";
       this.scene.start('transitionScene');
-      console.log(globalVariables.endingCriteria.iceCream + " end");
+      // console.log(globalVariables.endingCriteria.iceCream + " end");
     }
 
     // timer update

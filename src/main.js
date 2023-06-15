@@ -31,10 +31,10 @@ let gameConfiguration = {
                 1,
                 2
             ],
-            maxSceneCustomers: 20,              // total number of customers that need to be satisfied to complete the scene
-            customersCap: 3,                    // maximum number of customers that can be present on the screen at any given time
+            maxSceneCustomers: 30,              // total number of customers that need to be satisfied to complete the scene
+            customersCap: 4,                    // maximum number of customers that can be present on the screen at any given time
             customerSpawnTime: 3,               // time (in seconds) to wait before spawning a new customer
-            sceneTimeLimit: 300                 // time (in seconds) until the minigame ends and the player moves on to the next scene
+            sceneTimeLimit: 180                 // time (in seconds) until the minigame ends and the player moves on to the next scene
         }
     }
 }

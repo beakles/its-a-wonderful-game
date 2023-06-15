@@ -92,6 +92,7 @@ class bankRushScene extends Phaser.Scene {
 
     // Text for the "accept bargain" button.
     this.acceptBargainText = this.add.text(500, 200, "ACCEPT", scoreTextConfig).setOrigin(0.5, 0.5);
+    this.acceptBargainText.setBackgroundColor('#04CC04CC');
     this.acceptBargainText.alpha = 0;
 
     // Make the accept button clickable.
@@ -115,6 +116,7 @@ class bankRushScene extends Phaser.Scene {
 
     // Text for the "decline bargain" option.
     this.declineBargainText = this.add.text(650, 200, "DECLINE", scoreTextConfig).setOrigin(0.5, 0.5);
+    this.declineBargainText.setBackgroundColor('#CC0404CC');
     this.declineBargainText.alpha = 0;
 
     // Make the decline button clickable.
@@ -202,6 +204,15 @@ class bankRushScene extends Phaser.Scene {
       this.scene.start('transitionScene');
     }
 
+    /*
+    // End the game and move to the transition scene if the bank's morale drops to zero.
+    if (this.bankMorale <= 0) {
+      globalVariables.sceneEnded = 'bankRush';
+      globalVariables.endingCriteria.bankRush = false;
+      this.scene.start('transitionScene');
+    }
+    */
+
     // End the game and move to the transition scene if there are no more customers left to spawn.
     if (this.customersArray.length <= 0 && this.customersSpawned >= gameConfiguration.sceneSettings.bankRushScene.maxSceneCustomers) {
       globalVariables.sceneEnded = 'bankRush';
@@ -273,11 +284,14 @@ class bankRushScene extends Phaser.Scene {
             this.currentMoney -= this.customerMoney;
 
             // Decrease the bank's morale but keep the amount of dollars the player has the same.
+            // Morale can go below 0% to prevent cheesing.
           } else if (this.bargainState == "decline") {
             this.bankMorale -= 15;
+            /*
             if (this.bankMorale <= 0) {
               this.bankMorale = 0;
             }
+            */
           }
 
           // Update the current customer to the "satisfied" state.
