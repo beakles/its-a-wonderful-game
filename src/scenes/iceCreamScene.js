@@ -190,6 +190,8 @@ class iceCreamScene extends Phaser.Scene {
     // check if player has completed the win requirement
     if (this.currentScore >= 100) {
       globalVariables.endingCriteria.iceCream = true;
+    } else {
+      globalVariables.endingCriteria.iceCream = false;
     }
 
     // send player to transition scene when time ends
