@@ -4,7 +4,7 @@ class iceCreamScene extends Phaser.Scene {
   }
 
   preload() {
-    // Load assets needed for the scene
+    // Load assets needed for the scene.
     this.load.image('iceCreamShop', './assets/ice_cream_shop.png');
 
     this.load.image('characterPlayer', './assets/george.png');
@@ -29,17 +29,24 @@ class iceCreamScene extends Phaser.Scene {
   }
 
   create() {
+
+    // Fix scoping issues related to detecting mouse clicks.
     const self = this;
-    // Background for the scene (the ice cream shop)
+
+    // Background for the scene (the ice cream shop).
     this.iceCreamSceneBackdrop = this.add.tileSprite(0, 0, gameConfiguration.width, gameConfiguration.height, 'iceCreamShop').setOrigin(0, 0);
-    // UI elements
+
+    // Background for the ingredients the player can select.
     this.ingredientIconsBackground = this.add.rectangle(gameConfiguration.width / 2 + 270, 20, 170, 100, 0x404040).setOrigin(0, 0);
 
+    // Background for the player's selected ingredients.
     this.playerInputBackground = this.add.rectangle(gameConfiguration.width / 2 - 585, 290 - 70, 55 * gameConfiguration.sceneSettings.iceCreamScene.playerInventoryCap, 60, 0x404040).setOrigin(0, 0);
     this.playerInputBackground.alpha = 1;
 
+    // Background for the customer's order.
     this.orderBackground = this.add.rectangle(415, 290, 55 * gameConfiguration.sceneSettings.iceCreamScene.customerOrderComplexity[1] + 55, 60, 0x404040).setOrigin(0, 0);
     this.orderBackground.alpha = 0;
+
     // text formatting
     let tutorialTextConfig = {
       fontFamily: 'CourierBold',
@@ -68,6 +75,7 @@ class iceCreamScene extends Phaser.Scene {
         right: 5
       }
     }
+
     // tutorial, score and timer
     this.tutorialText = this.add.text(gameConfiguration.width / 2 - 50, 50, "Match your list of ingredients\nwith the customer's list of ingredients (order matters)\nClick the ingredients at the top right to select them", tutorialTextConfig).setOrigin(0.5, 0.5);
     this.scoreText = this.add.text(gameConfiguration.width / 2 - gameConfiguration.width / 2.5, gameConfiguration.height / 2 - gameConfiguration.height / 2.5, "CENTS: 0/100", scoreTextConfig).setOrigin(0.5, 0.5);
